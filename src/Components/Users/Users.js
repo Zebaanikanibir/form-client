@@ -6,7 +6,7 @@ const Users = () => {
     const [users, setUsers] = useState([])
     const [loggedInUser, setLoggedInUser] = useContext(UserContext)
     useEffect(()=>{
-        fetch('http://localhost:5000/users?email='+loggedInUser.email)
+        fetch('https://polar-meadow-65365.herokuapp.com/users?email='+loggedInUser.email)
         .then(res => res.json())
         .then(data => setUsers(data))
 

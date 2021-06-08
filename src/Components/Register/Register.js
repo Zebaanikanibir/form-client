@@ -46,7 +46,7 @@ const Register = () => {
 
 
 
-        const url = `http://localhost:5000/registered`
+        const url = `https://polar-meadow-65365.herokuapp.com/registered`
         console.log(eventData)
 
         fetch(url, {
