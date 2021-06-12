@@ -86,14 +86,14 @@ const storeAuthToken = () =>{
         <div className="App mt-5">
             <h3>Log In</h3>
               <form id="logedIn" onSubmit={handleSubmit(onSubmit)}>
-              <input className="input" id="email" type="email" placeholder="Your Email"{...register('email', {
-                    required: "this is a required", maxLength: {
-                        value: 30,
-                        message: "Max length is 30"
+             
+                <input className="input" id="email" type="email" placeholder="Enter Email"{...register('email', {
+                    required: "this is a required", pattern: {
+                        value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                        message: "Invalid email address"
                     }
-                   
                 })} /> <br />
-                {errors.uName && <p>{errors.uName.message}</p>}
+                {errors.email && <p>{errors.email.message}</p>}
               <input className="input" id="password" type="password" placeholder="password" {...register('password', {
                     required: "this is a required", maxLength: {
                         value: 10,
