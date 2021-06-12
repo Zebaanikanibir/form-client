@@ -6,23 +6,23 @@ import "firebase/auth";
 import "firebase/firestore";
 import firebaseConfig from '../../firebase.config';
 import {
-   
+
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
 
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-  }
+}
 
 
 
 
 
 const Register = () => {
-    
-    const  [error, setError] = useState("")
-    
+
+    const [error, setError] = useState("")
+
     const { register, handleSubmit, formState: {
         errors
 
@@ -31,17 +31,17 @@ const Register = () => {
     });
     console.log('err', errors)
     const onSubmit = (data) => {
-    
-        console.log('data',data)
+
+        console.log('data', data)
 
         const eventData = {
-            fName: data.fName,
-            lName: data.lName,
+
             uName: data.uName,
             email: data.email,
             password: data.password,
-            cPassword: data.cPassword
-
+            // cPassword: data.cPassword
+            number: data.number,
+            address: data.address
         }
 
 
@@ -57,34 +57,25 @@ const Register = () => {
             },
             body: JSON.stringify(eventData)
         })
-            .then(res => alert('Registered', res))
+            .then(res => alert('User added Successfully', res))
 
-            if(data.uName && data.password){
-                firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
-            .then((userCredential) => {
-              // Signed in 
-              var user = userCredential.user;
-              console.log(user)
-            })
-            .catch((error) => {
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              
-              if(errorMessage){
-                  alert(errorMessage)
-              }
-            });
-            }
-            // firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-            // .then((userCredential) => {
-            //   // Signed in
-            //   var user = userCredential.user;
-            //   // ...
-            // })
-            // .catch((error) => {
-            //   var errorCode = error.code;
-            //   var errorMessage = error.message;
-            // });
+        if (data.password && data.email) {
+            firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+                .then((userCredential) => {
+                    // Signed in 
+                    var user = userCredential.user;
+                    console.log(user)
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+
+                    if (errorMessage) {
+                        alert(errorMessage)
+                    }
+                });
+        }
+
 
 
     };
@@ -93,22 +84,14 @@ const Register = () => {
     return (
         <section className="App mt-5">
 
-              <h3>Sign In</h3>
+            <h3>Sign In</h3>
             <form id="signedIn" onSubmit={handleSubmit(onSubmit)}>
 
-                <input className="input" id="fName" type="text" placeholder="First Name"{...register('fName', {
-                    required: "this is a required", maxLength: {
-                        value: 3,
-                        message: "Max length is 3"
-                    }
-                })} /> <br />
-                {errors.fName && <p>{errors.fName.message}</p>}
-                <input className="input" id="lName" type="text" placeholder="Last Name"{...register('lName', { required: "this is a required" })} /> <br />
-                {errors.lName && <p>{errors.lName.message}</p>}
-                
 
-               
-                <input className="input" id="Name" type="text" placeholder="User Name"{...register('uName',{
+
+
+
+                <input className="input" id="Name" type="text" placeholder="User Name"{...register('uName', {
                     required: true, maxLength: {
                         value: 30,
                         message: "Max length is 30"
@@ -128,7 +111,6 @@ const Register = () => {
                     }
                 })} /> <br />
                 {errors.email && <p>{errors.email.message}</p>}
-                
                 <input className="input" id="password" type="password" placeholder="password" {...register('password', {
                     required: "this is a required", maxLength: {
                         value: 10,
@@ -136,16 +118,23 @@ const Register = () => {
                     }
                 })} /> <br />
                 {errors.password && <p>{errors.password.message}</p>}
-                <input className="input" id="cPassword" type="password" placeholder="confirm password" {...register('cPassword', {
+                <input className="input" id="number" type="number" placeholder="Number" {...register('number', {
                     required: "this is a required", maxLength: {
                         value: 10,
                         message: "Max length is 10"
                     }
                 })} /> <br />
-                {errors.cPassword && <p>{errors.cPassword.message}</p>}
-                <input className="input" className="primary" type="submit"/>
+                {errors.number && <p>{errors.number.message}</p>}
+                <input className="input" id="address" type="text" placeholder="Address" {...register('address', {
+                    required: "this is a required", maxLength: {
+                        value: 10,
+                        message: "Max length is 10"
+                    }
+                })} /> <br />
+                {errors.address && <p>{errors.address.message}</p>}
+                <input className="input" className="primary" type="submit" />
 
-                  
+
 
             </form>
 

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import firebase from "firebase/app"
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
-import GoogleSign from '../GoogleSign/GoogleSign';
+
 import {
    
     Link
@@ -24,7 +24,8 @@ const Login = () => {
         isSignedIn: false,
         name: '',
         email: '',
-        photo: ''
+        photo: '',
+        password:''
 
     })
 const onSubmit =(data) =>{
@@ -48,16 +49,18 @@ const onSubmit =(data) =>{
     .then((userCredential) => {
       // Signed in
      
-      const { displayName, email, photoURL } = userCredential.user;
+      const { displayName, email, photoURL, password } = userCredential.user;
       const signedInUser = {
           isSignedIn: true,
           name: displayName,
           email: email,
-          photo: photoURL
+          photo: photoURL,
+          password:password
       }
       setUser(signedInUser)
       setLoggedInUser(signedInUser);
-      console.log(displayName, email, photoURL);
+      console.log(displayName, email, password);
+      storeAuthToken()
       history.replace(from);
     })
     .catch((error) => {
@@ -69,6 +72,13 @@ const onSubmit =(data) =>{
     });
     }
 
+}
+const storeAuthToken = () =>{
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+       sessionStorage.setItem('token', idToken)
+      }).catch(function(error) {
+        // Handle error
+      });
 }
 
 
@@ -94,9 +104,9 @@ const onSubmit =(data) =>{
                 <input className="input primary" type="submit" />
               </form>
               <p>register here  <Link to="/register">Register</Link></p>
+              
 
-
-            <GoogleSign></GoogleSign>
+            
         </div>
     );
 };

@@ -1,8 +1,8 @@
 import React, { createContext, useState } from 'react';
 import './App.css';
-import Home from './Components/Home/Home';
-import GoogleSign from './Components/GoogleSign/GoogleSign';
+import Screen1 from './Components/Screen1/Screen1'
 import Login from './Components/Login/Login';
+import Screen2 from './Components/Screen2/Screen2'
 import Users from './Components/Users/Users';
 import PrivateRoute from './Components/Login/PrivateRoute';
 import Register from './Components/Register/Register';
@@ -20,25 +20,19 @@ function App() {
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
         <Switch>
-          <Route path="/home">
-           <Home></Home>
-          </Route>
-          <Route path="/google">
-            <GoogleSign></GoogleSign>
-          </Route>
           <Route path="/login">
             <Login></Login>
           </Route>
           <Route path="/register">
             <Register></Register>
           </Route>
-          <PrivateRoute path="/user">
-          <Users></Users>
+          <PrivateRoute path="/screen2">
+          <Screen2></Screen2>
+          </PrivateRoute>
+          <PrivateRoute exact path="/">
+           <Screen2></Screen2>
           </PrivateRoute>
           
-          <Route exact path="/">
-           <Home></Home>
-          </Route>
           
         </Switch>
       </Router>

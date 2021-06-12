@@ -58,6 +58,7 @@ const NewRegister = () => {
                 {errors.cPassword && <p>{errors.cPassword.message}</p>}
       <input type="submit" />
     </form>
+    
         </div>
     );
 };

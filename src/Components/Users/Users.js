@@ -5,20 +5,44 @@ import UserDetails from '../UserDetails/UserDetails';
 const Users = () => {
     const [users, setUsers] = useState([])
     const [loggedInUser, setLoggedInUser] = useContext(UserContext)
-    useEffect(()=>{
-        fetch('https://polar-meadow-65365.herokuapp.com/users?email='+loggedInUser.email)
-        .then(res => res.json())
-        .then(data => setUsers(data))
+    useEffect(() => {
+        fetch('https://polar-meadow-65365.herokuapp.com/users',{
+
+        method:'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
+        })
+            .then(res => res.json())
+            .then(data => setUsers(data))
 
 
 
-    },[])
-    console.log('user',users)
+    }, [])
+    console.log('user', users)
     return (
         <div>
-            {
-        users.map(user =><UserDetails user={user}></UserDetails>)
-            }
+            <table className="table">
+                <thead>
+                    <tr>
+                    <th scope="col"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                {
+                    users.map(user => <UserDetails user={user} key={user.key}></UserDetails>)
+                }
+                
+                </tbody>
+              
+            </table>
+
         </div>
     );
 };
