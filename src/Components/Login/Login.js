@@ -30,20 +30,7 @@ const Login = () => {
     })
 const onSubmit =(data) =>{
     
-    // if(data.uName && data.password){
-    //     firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
-    // .then((userCredential) => {
-    //   // Signed in 
-    //   var user = userCredential.user;
-    //   console.log(user)
-    // })
-    // .catch((error) => {
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   // ..
-    //   console.log(errorMessage)
-    // });
-    // }
+    
     if(data.email&& data.password){
         firebase.auth().signInWithEmailAndPassword(data.email, data.password)
     .then((userCredential) => {
@@ -71,15 +58,21 @@ const onSubmit =(data) =>{
       }
     });
     }
+    const storeAuthToken = () =>{
+        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+            console.log('token', idToken)
+           sessionStorage.setItem('token', idToken)
+    setTimeout(function() {
+    sessionStorage.clear()
+    },300000)
 
+           history.replace(from);
+          }).catch(function(error) {
+            // Handle error
+          });
+    }
 }
-const storeAuthToken = () =>{
-    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-       sessionStorage.setItem('token', idToken)
-      }).catch(function(error) {
-        // Handle error
-      });
-}
+
 
 
     return (

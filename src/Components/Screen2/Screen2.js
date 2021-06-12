@@ -9,6 +9,7 @@ const Screen2 = () => {
       <Register></Register>
       </div>
      <div className="col-md-7">
+       <h2>User Details</h2>
      <Users></Users>
      </div>
     </div>

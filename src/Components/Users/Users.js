@@ -6,14 +6,7 @@ const Users = () => {
     const [users, setUsers] = useState([])
     const [loggedInUser, setLoggedInUser] = useContext(UserContext)
     useEffect(() => {
-        fetch('https://polar-meadow-65365.herokuapp.com/users',{
-
-        method:'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${sessionStorage.getItem('token')}`
-        }
-        })
+        fetch('https://polar-meadow-65365.herokuapp.com/users')
             .then(res => res.json())
             .then(data => setUsers(data))
 
@@ -36,7 +29,7 @@ const Users = () => {
                 <tbody>
                 
                 {
-                    users.map(user => <UserDetails user={user} key={user.key}></UserDetails>)
+                    users.map(user => <UserDetails user={user} key={user._id}></UserDetails>)
                 }
                 
                 </tbody>
